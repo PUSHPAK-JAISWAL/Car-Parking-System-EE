@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Parking System</title>
+    <style>
+        body {
+            background: linear-gradient(to right, lightgreen, lightblue);
+            font-family: Arial, sans-serif;
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .slot {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        #about {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #aboutSection {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Parking System</h1>
+    <div class="slot" id="slot1">Slot 1: </div>
+    <div class="slot" id="slot2">Slot 2: </div>
+    <div class="slot" id="slot3">Slot 3: </div>
+    <div class="slot" id="slot4">Slot 4: </div>
+    <div class="slot" id="slot5">Slot 5: </div>
+    <div class="slot" id="slot6">Slot 6: </div>
+    <div class="slot" id="available">Slots Available: </div>
+    <button id="about" onclick="showAbout()">About Us</button>
+    <div id="aboutSection">
+        <h2>About Us</h2>
+        <p>This is a project made by the Students of the Csmss College of Engineering A.bad(Chh.Sambhajinagar).</p>
+        <p>Members:</p>
+        <ul>
+            <li>Sarthak Dayma</li>
+            <li>Prashik Dehere</li>
+            <li>Ajay Gaware</li>
+            <li>Pushpak Jaiswal</li>
+            <li>Ritesh Kakde</li>
+        </ul>
+    </div>
+
+    <script>
+        function showAbout() {
+            var aboutSection = document.getElementById("aboutSection");
+            if (aboutSection.style.display === "none") {
+                aboutSection.style.display = "block";
+            } else {
+                aboutSection.style.display = "none";
+            }
+        }
+
+        // Fetch data from Blynk server
+        fetch('http://blynk-cloud.com/YourAuthToken/get/V1')
+            .then(response => response.json())
+            .then(data => {
+                // Update parking slots status based on received data
+                var slots = data[0].split(",");
+                for (var i = 0; i < slots.length; i++) {
+                    document.getElementById("slot" + (i + 1)).innerHTML += slots[i];
+                }
+
+                // Update number of available slots
+                var available = slots.filter(function(slot) { return slot === "Empty"; }).length;
+                document.getElementById("available").innerHTML += available;
+            });
+    </script>
+</body>
+</html>
