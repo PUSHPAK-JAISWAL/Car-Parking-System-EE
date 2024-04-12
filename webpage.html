@@ -95,7 +95,22 @@
             </div>
         </div>
         <button class="btn btn-success mt-3" id="about" onclick="showAbout()">About Us</button>
-        <div id="aboutSection" style="margin-top: 3rem; background-color: #f9f9f9; padding: 2rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
+       <style>
+    @media only screen and (max-width: 600px) {
+        #aboutSection {
+            padding: 1rem;
+        }
+        #aboutSection h2, #aboutSection p, #aboutSection h3 {
+            font-size: 1rem;
+        }
+        #aboutSection ul {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+
+<div id="aboutSection" style="margin-top: 3rem; background-color: #f9f9f9; padding: 2rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
     <h2 style="color: #2c3e50; text-align: center;">About Us</h2>
     <hr>
     <p style="font-size: 1.2rem; text-align: center;">This project was created and executed by the students of:</p>
@@ -108,7 +123,6 @@
         <li>Pushpak Jaiswal</li>
         <li>Ritesh Kakde</li>
     </ul>
-</div>
 </div>
 
     <script>
