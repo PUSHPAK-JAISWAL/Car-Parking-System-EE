@@ -3,7 +3,7 @@
 #include <LiquidCrystal_I2C.h>
 
 Servo myservo;
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+LiquidCrystal_I2C lcd(0x27, 16, 2); // Set up the LCD's number of columns and rows
 
 int irSensors[6] = {5, 6, 7, 8, 9, 10}; // IR sensor pins for parking slots
 int irGateEntry = 11; // IR sensor pin for gate entry
@@ -13,6 +13,7 @@ int slot = 6;
 
 void setup() {
   Serial.begin(9600);
+  Wire.begin();
 
   for (int i = 0; i < 6; i++) {
     pinMode(irSensors[i], INPUT);
@@ -24,28 +25,36 @@ void setup() {
   myservo.attach(3);
   myservo.write(90);
 
-  lcd.begin(20, 4);
+  lcd.init(); // Initialize the LCD
+  lcd.backlight(); // Turn on the backlight
   lcd.setCursor(0, 0); // Set cursor to row 0
-  lcd.print("Available Slots:");
+  lcd.print("Avail Slots:");
 
   Read_Sensor();
 
-  int total = slots[0] + slots[1] + slots[2] + slots[3] + slots[4] + slots[5];
-  slot = slot - total;
+  int total = 0;
+  for (int i = 0; i < 6; i++) {
+    total += slots[i];
+  }
+  slot -= total;
 }
 
 void loop() {
   Read_Sensor();
   lcd.setCursor(0, 1); // Set cursor to row 1
+  lcd.clear(); // Clear the display
   for (int i = 0; i < 6; i++) {
-    lcd.print("Slot");
+    lcd.print("S");
     lcd.print(i + 1);
-    lcd.print(slots[i] ? ": Filled " : ": Empty ");
+    lcd.print(slots[i] ? ":F" : ":E");
+    if (i == 2) {
+      lcd.setCursor(0, 2); // Move to the next row after 3 slots
+    }
   }
 
   // Send parking slots status to NodeMCU
   for (int i = 0; i < 6; i++) {
-    Serial.print(slots[i] ? "Filled" : "Empty");
+    Serial.print(slots[i] ? "F" : "E");
     if (i < 5) Serial.print(",");
   }
   Serial.println();
@@ -54,7 +63,7 @@ void loop() {
   // Control gate based on parking slots status and car presence at the gate
   bool allSlotsFilled = true;
   for (int i = 0; i < 6; i++) {
-    if (slots[i] == false) {
+    if (!slots[i]) {
       allSlotsFilled = false;
       break;
     }
