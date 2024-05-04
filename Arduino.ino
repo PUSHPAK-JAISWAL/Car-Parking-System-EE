@@ -47,14 +47,15 @@ void loop() {
     lcd.print("S");
     lcd.print(i + 1);
     lcd.print(slots[i] ? ":F" : ":E");
+    lcd.print("  ");
     if (i == 2) {
-      lcd.setCursor(0, 2); // Move to the next row after 3 slots
+      lcd.setCursor(0, 1); // Move to the next row after 3 slots
     }
   }
 
   // Send parking slots status to NodeMCU
   for (int i = 0; i < 6; i++) {
-    Serial.print(slots[i] ? "F" : "E");
+    Serial.print(slots[i] ? "Filled" : "Empty");
     if (i < 5) Serial.print(",");
   }
   Serial.println();
