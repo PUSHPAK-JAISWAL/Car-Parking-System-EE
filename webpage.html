@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
+        /* Your original CSS styles go here */
         body {
             background: linear-gradient(to right, lightgreen, lightblue);
             font-family: Arial, sans-serif;
@@ -78,25 +79,7 @@
             from {transform: translateY(-50px); opacity: 0;}
             to {transform: translateY(0); opacity: 1;}
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 class="text-center">Car Parking System</h1>
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="slot" id="slot1">Slot 1: </div>
-                <div class="slot" id="slot2">Slot 2: </div>
-                <div class="slot" id="slot3">Slot 3: </div>
-                <div class="slot" id="slot4">Slot 4: </div>
-                <div class="slot" id="slot5">Slot 5: </div>
-                <div class="slot" id="slot6">Slot 6: </div>
-                <div class="slot" id="available">Slots Available: </div>
-            </div>
-        </div>
-        <button class="btn btn-success mt-3" id="about" onclick="showAbout()">About Us</button>
-      <style>
-    @media only screen and (max-width: 600px) {
+        @media only screen and (max-width: 600px) {
         #aboutSection {
             padding: 1rem;
         }
@@ -115,11 +98,25 @@
     #aboutSection ul li {
         list-style-type: disc;
         margin-left: 20px;
-        text-align: center; /* Add this line */
-    }
-</style>
-
-<div id="aboutSection" style="margin-top: 3rem; background-color: #f9f9f9; padding: 2rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
+        text-align: center;
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Car Parking System</h1>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="slot" id="slot1">Slot 1: </div>
+                <div class="slot" id="slot2">Slot 2: </div>
+                <div class="slot" id="slot3">Slot 3: </div>
+                <div class="slot" id="slot4">Slot 4: </div>
+                <div class="slot" id="slot5">Slot 5: </div>
+                <div class="slot" id="slot6">Slot 6: </div>
+                <div class="slot" id="available">Slots Available: </div>
+            </div>
+        </div>
+        <button class="btn btn-success mt-3" id="about" onclick="showAbout()">About Us</button>
+        <div id="aboutSection" style="margin-top: 3rem; background-color: #f9f9f9; padding: 2rem; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
     <h2 style="color: #2c3e50; text-align: center;">About Us</h2>
     <hr>
     <p style="font-size: 1.2rem; text-align: center;">This project was created and executed by the students of:</p>
@@ -133,8 +130,7 @@
         <li>Ritesh Kakde</li>
     </ul>
 </div>
-
-
+    </div>
 
     <script>
         function showAbout() {
@@ -148,7 +144,7 @@
 
         // Fetch data from Blynk server
         function fetchData() {
-            fetch('http://blynk-cloud.com/YourAuthToken/get/V1')
+            fetch('https://blr1.blynk.cloud/external/api/get?token=3bgeF2MkmryyR6kj07RrfbuahDM0DNPg&V1')
                 .then(response => response.json())
                 .then(data => {
                     // Update parking slots status based on received data
